@@ -12,6 +12,7 @@ command! ShowDebugLog call ai_summary#error_file#ShowDebugLog()
 autocmd VimLeavePre * call ai_summary#debug#MyGlobalErrorFlush()
 
 let g:ai_summary_glass = expand('<sfile>:p:h:h') . '/glass_summary/main.py'
+let g:ai_summary_chat_glass = expand('<sfile>:p:h:h') . '/glass_summary/chat_main.py'
 
 
 " Default path for conversation history file
@@ -32,7 +33,11 @@ command! AISummaryShowHistory call ai_summary#core#ShowHistory()
 command! AISummaryPrintContext call ai_summary#core#PrintHistory()
 
 " Start interactive chat session
+
+command! AISummaryChat call ai_summary#functions#ShowGlassChat()
+
 command! AISummaryChat call ai_summary#chat#Start()
+
 
 " Conversation history for providing context
 let g:ai_summary_history = []
