@@ -15,7 +15,7 @@ def main():
     parsed_html = parse_markdown(sys.argv[1])
     
     content_html = HTML_WRAPPER.format(content=parse_markdown(sys.argv[1]))
-    win = GlassCodeEditor(content_html)  # Changed from GlassWindow to GlassCodeEditor
+    win = GlassCodeEditor(content_html)  # display the HTML content in a floating window
     win.show()
 
     sys.exit(app.exec_())
