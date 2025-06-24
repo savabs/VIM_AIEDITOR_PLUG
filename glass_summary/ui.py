@@ -1,6 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QFont
 import sys
+import os
+import json
+import html
+import urllib.request
 
 class GlassCodeEditor(QtWidgets.QWidget):
     def __init__(self, html_content, size=(1200, 800)):
@@ -29,9 +33,9 @@ class GlassCodeEditor(QtWidgets.QWidget):
                 border-radius: 15px;
             }
         """)
-        background_layout = QtWidgets.QVBoxLayout(self.background)
-        background_layout.setContentsMargins(15, 15, 15, 15)
-        background_layout.setSpacing(8)
+        self.background_layout = QtWidgets.QVBoxLayout(self.background)
+        self.background_layout.setContentsMargins(15, 15, 15, 15)
+        self.background_layout.setSpacing(8)
 
         # Toolbar with close button
         toolbar_layout = QtWidgets.QHBoxLayout()
@@ -79,8 +83,8 @@ class GlassCodeEditor(QtWidgets.QWidget):
         self.browser.setHtml(html_content)
 
         # Assemble
-        background_layout.addLayout(toolbar_layout)
-        background_layout.addWidget(self.browser)
+        self.background_layout.addLayout(toolbar_layout)
+        self.background_layout.addWidget(self.browser)
         main_layout.addWidget(self.background)
 
         # Dynamic theme adjustment
@@ -126,6 +130,64 @@ class GlassCodeEditor(QtWidgets.QWidget):
     def mouseReleaseEvent(self, event):
         self._drag_pos = None
         event.accept()
+
+
+class GlassChatWindow(GlassCodeEditor):
+    """Glass window with a chat input at the bottom."""
+
+    def __init__(self, size=(1200, 800)):
+        super().__init__("<h2>AI Chat</h2>", size=size)
+        self.history = []
+
+        self.input = QtWidgets.QLineEdit()
+        self.input.setPlaceholderText("Type a message and press Enter")
+        self.input.returnPressed.connect(self.handle_send)
+
+        self.background_layout.addWidget(self.input)
+
+    def append_message(self, role, text):
+        safe = html.escape(text)
+        self.browser.append(f"<b>{role}:</b> {safe}")
+
+    def call_openai(self, message):
+        api_key = os.environ.get("OPENAI_API_KEY", "")
+        if not api_key:
+            return "[OPENAI_API_KEY not set]"
+
+        self.history.append({"role": "user", "content": message})
+        req_body = json.dumps({
+            "model": "gpt-4o-2024-05-13",
+            "max_tokens": 2048,
+            "messages": self.history,
+        }).encode("utf-8")
+
+        req = urllib.request.Request(
+            "https://api.openai.com/v1/chat/completions",
+            data=req_body,
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}",
+            },
+        )
+
+        try:
+            with urllib.request.urlopen(req) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                reply = data["choices"][0]["message"]["content"]
+        except Exception as e:
+            reply = f"[error] {e}"
+
+        self.history.append({"role": "assistant", "content": reply})
+        return reply
+
+    def handle_send(self):
+        text = self.input.text().strip()
+        if not text:
+            return
+        self.input.clear()
+        self.append_message('You', text)
+        reply = self.call_openai(text)
+        self.append_message('AI', reply)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
