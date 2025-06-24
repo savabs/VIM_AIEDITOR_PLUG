@@ -46,3 +46,26 @@ qa!
     data = json.loads(out_file.read_text())
     assert len(data['messages']) == 2
 
+
+
+def test_history_persistence(tmp_path):
+    script = tmp_path / "script.vim"
+    hist_file = tmp_path / "hist.json"
+    out_file = tmp_path / "out.txt"
+    script.write_text(
+        f"""
+let g:ai_summary_history_file = '{hist_file}'
+source autoload/ai_summary/core.vim
+let g:ai_summary_history = []
+call add(g:ai_summary_history, {{'role':'user','content':'hello'}})
+call ai_summary#core#SaveHistory()
+let g:ai_summary_history = []
+call ai_summary#core#LoadHistory()
+call writefile([g:ai_summary_history[0].content], '{out_file}')
+qa!
+"""
+    )
+    run_vim_script(script)
+    assert out_file.read_text().strip() == 'hello'
+
+
