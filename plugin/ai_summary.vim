@@ -35,8 +35,14 @@ command! AISummaryPrintContext call ai_summary#core#PrintHistory()
 " Start interactive chat session
 
 command! AISummaryChat call ai_summary#functions#ShowGlassChat()
+" Common misspelling support
+command! AISummarChat call ai_summary#functions#ShowGlassChat()
+
+
+command! AISummaryChat call ai_summary#functions#ShowGlassChat()
 
 command! AISummaryChat call ai_summary#chat#Start()
+
 
 
 " Conversation history for providing context

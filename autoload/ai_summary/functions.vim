@@ -44,6 +44,15 @@ endfunction
 command! -nargs=1 GlassSummary call ai_summary#functions#ShowGlassSummary(<f-args>)
 
 function! ai_summary#functions#ShowGlassChat()
+
+    " Ensure PyQt5 is available before launching the UI
+    silent! call system('python3 -c "import PyQt5"')
+    if v:shell_error
+        echoerr 'PyQt5 not found. Install python3-pyqt5 to use :AISummaryChat'
+        return
+    endif
+
+
     let script = shellescape(g:ai_summary_chat_glass)
     call system('python3 ' . script . ' &')
 endfunction
