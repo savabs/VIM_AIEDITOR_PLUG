@@ -23,14 +23,29 @@ function! ai_summary#api#CallOpenAIAPI(tmpfile) abort
     let curl_cmd = "curl -s https://api.openai.com/v1/chat/completions " .
           \ "-H 'Content-Type: application/json' " .
           \ "-H 'Authorization: Bearer " . api_key . "' " .
-          \ "-d @" . a:tmpfile . " | jq -r '.choices[0].message.content'"
+          \ "-d @" . a:tmpfile
 
     call ai_summary#debug#DebugLog("Curl command: " . curl_cmd)
 
-    let result = system(curl_cmd)
-    call ai_summary#debug#DebugLog("API response length: " . strlen(result))
+    let result_json = system(curl_cmd)
+    call ai_summary#debug#DebugLog("Raw API response length: " . strlen(result_json))
 
-    return result
+    try
+        let parsed = json_decode(result_json)
+    catch
+        call ai_summary#debug#ErrorLog("Failed to decode JSON: " . v:exception)
+        return ""
+    endtry
+
+    if has_key(parsed, 'choices') && len(parsed.choices) > 0
+        return parsed.choices[0].message.content
+    elseif has_key(parsed, 'error')
+        let msg = '[API error] ' . parsed.error.message
+        call ai_summary#debug#ErrorLog('API error: ' . parsed.error.message)
+        return msg
+    else
+        return ''
+    endif
 endfunction
 
 
