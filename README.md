@@ -33,3 +33,22 @@ to echo the JSON representation of the stored messages.  Alternatively, use
 
 to open the history in a scratch buffer.
 
+## Vim Commands
+
+The plugin provides several commands that can be run directly from Vim.  Each
+one performs a specific action to help drive the summarizer.
+
+- `:CurrentFileSummary {prompt}` – summarises the current buffer using the
+  supplied text and shows the result in a floating "glass" window.
+- `:GlassSummary {markdown-file}` – opens the given Markdown file in the glass
+  viewer.
+- `:AISummaryShowHistory` – opens the stored conversation history in a scratch
+  buffer.
+- `:AISummaryPrintContext` – prints the same history as JSON on the command
+  line.
+- `:AISummaryResetHistory` – clears the history variable and removes the
+  history file.
+- `:ShowErrorLog` – displays the error log located at `/tmp/vim_ai_error.log`.
+- `:ShowDebugLog` – displays the debug log located at `/tmp/debug_ai_summary.log`.
+
+
