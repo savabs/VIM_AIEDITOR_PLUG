@@ -47,6 +47,7 @@ qa!
     assert len(data['messages']) == 2
 
 
+
 def test_history_persistence(tmp_path):
     script = tmp_path / "script.vim"
     hist_file = tmp_path / "hist.json"
@@ -66,4 +67,5 @@ qa!
     )
     run_vim_script(script)
     assert out_file.read_text().strip() == 'hello'
+
 

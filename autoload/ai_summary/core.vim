@@ -16,7 +16,9 @@ function! ai_summary#core#CurrentFileSummary(user_prompt)
 
     " Append current user message to history
     call add(g:ai_summary_history, {'role': 'user', 'content': prompt})
+
     call ai_summary#core#SaveHistory()
+
 
     " Build JSON with full history
     let json_lines = ai_summary#api#BuildJSONRequest(g:ai_summary_history)
@@ -37,7 +39,9 @@ function! ai_summary#core#CurrentFileSummary(user_prompt)
       let summary_content = api_response
       " Store assistant response in history
       call add(g:ai_summary_history, {'role': 'assistant', 'content': api_response})
+
       call ai_summary#core#SaveHistory()
+
       call ai_summary#debug#DebugLog("DEBUG: Using API response as summary, length = " . strlen(summary_content))
       " Save summary to file
       let summary_file = '/tmp/ai_summary.txt'

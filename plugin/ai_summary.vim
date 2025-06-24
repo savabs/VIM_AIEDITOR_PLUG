@@ -13,6 +13,7 @@ autocmd VimLeavePre * call ai_summary#debug#MyGlobalErrorFlush()
 
 let g:ai_summary_glass = expand('<sfile>:p:h:h') . '/glass_summary/main.py'
 
+
 " Default path for conversation history file
 if !exists('g:ai_summary_history_file')
   let g:ai_summary_history_file = '/tmp/ai_summary_history.json'
@@ -26,4 +27,11 @@ command! AISummaryResetHistory call ai_summary#core#ResetHistory()
 
 " Command to display conversation history
 command! AISummaryShowHistory call ai_summary#core#ShowHistory()
+
+" Conversation history for providing context
+let g:ai_summary_history = []
+
+" Command to reset conversation history
+command! AISummaryResetHistory let g:ai_summary_history = []
+
 
