@@ -28,6 +28,9 @@ command! AISummaryResetHistory call ai_summary#core#ResetHistory()
 " Command to display conversation history
 command! AISummaryShowHistory call ai_summary#core#ShowHistory()
 
+" Command to echo conversation history on the command line
+command! AISummaryPrintContext call ai_summary#core#PrintHistory()
+
 " Conversation history for providing context
 let g:ai_summary_history = []
 
