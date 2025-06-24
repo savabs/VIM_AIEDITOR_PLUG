@@ -50,5 +50,7 @@ one performs a specific action to help drive the summarizer.
   history file.
 - `:ShowErrorLog` – displays the error log located at `/tmp/vim_ai_error.log`.
 - `:ShowDebugLog` – displays the debug log located at `/tmp/debug_ai_summary.log`.
+- `:AISummaryChat` – opens an interactive chat bar at the bottom of the window
+  for continuous conversation with the AI.
 
 
