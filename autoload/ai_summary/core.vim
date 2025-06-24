@@ -9,8 +9,16 @@ function! ai_summary#core#CurrentFileSummary(user_prompt)
     let prompt = a:user_prompt . "\n\n" . file_content
     call ai_summary#debug#DebugLog("DEBUG: Built prompt length = " . strlen(prompt))
 
-    " Build JSON
-    let json_lines = ai_summary#api#BuildJSONRequest(prompt)
+    " Ensure history list exists
+    if !exists('g:ai_summary_history')
+      let g:ai_summary_history = []
+    endif
+
+    " Append current user message to history
+    call add(g:ai_summary_history, {'role': 'user', 'content': prompt})
+
+    " Build JSON with full history
+    let json_lines = ai_summary#api#BuildJSONRequest(g:ai_summary_history)
     call ai_summary#debug#DebugLog("DEBUG: json_lines length = " . len(json_lines))
     call ai_summary#debug#DebugLog("DEBUG: First line = " . json_lines[0])
 
@@ -26,6 +34,8 @@ function! ai_summary#core#CurrentFileSummary(user_prompt)
 
     if strlen(api_response) > 0
       let summary_content = api_response
+      " Store assistant response in history
+      call add(g:ai_summary_history, {'role': 'assistant', 'content': api_response})
       call ai_summary#debug#DebugLog("DEBUG: Using API response as summary, length = " . strlen(summary_content))
       " Save summary to file
       let summary_file = '/tmp/ai_summary.txt'

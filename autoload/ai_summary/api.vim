@@ -1,11 +1,12 @@
-function! ai_summary#api#BuildJSONRequest(prompt) abort
-    let json_body = '{' .
-          \ '"model": "gpt-4o-2024-05-13", ' .
-          \ '"max_tokens": 2048, ' .
-          \ '"messages": [ { "role": "user", "content": "' .
-          \ substitute(a:prompt, '"', '\\"', 'g') . '" } ]' .
-          \ '}'
-    return split(json_body, "\n")
+" Build the JSON payload from a list of messages
+function! ai_summary#api#BuildJSONRequest(messages) abort
+    let l:request = {
+                \ 'model': 'gpt-4o-2024-05-13',
+                \ 'max_tokens': 2048,
+                \ 'messages': a:messages
+                \ }
+    let l:json_body = json_encode(l:request)
+    return split(l:json_body, "\n")
 endfunction
 
 function! ai_summary#api#CallOpenAIAPI(tmpfile) abort
