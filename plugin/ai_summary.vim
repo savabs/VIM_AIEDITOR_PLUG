@@ -33,7 +33,11 @@ command! AISummaryShowHistory call ai_summary#core#ShowHistory()
 command! AISummaryPrintContext call ai_summary#core#PrintHistory()
 
 " Start interactive chat session
+
 command! AISummaryChat call ai_summary#functions#ShowGlassChat()
+
+command! AISummaryChat call ai_summary#chat#Start()
+
 
 " Conversation history for providing context
 let g:ai_summary_history = []
