@@ -43,3 +43,8 @@ endfunction
 
 command! -nargs=1 GlassSummary call ai_summary#functions#ShowGlassSummary(<f-args>)
 
+function! ai_summary#functions#ShowGlassChat()
+    let script = shellescape(g:ai_summary_chat_glass)
+    call system('python3 ' . script . ' &')
+endfunction
+
