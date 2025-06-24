@@ -13,8 +13,8 @@ def main():
     
     app = QtWidgets.QApplication(sys.argv)
     parsed_html = parse_markdown(sys.argv[1])
-    
-    content_html = HTML_WRAPPER.format(content=parse_markdown(sys.argv[1]))
+
+    content_html = HTML_WRAPPER.format(content=parsed_html)
     win = GlassCodeEditor(content_html)  # Changed from GlassWindow to GlassCodeEditor
     win.show()
 
