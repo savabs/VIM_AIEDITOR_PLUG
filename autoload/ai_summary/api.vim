@@ -11,7 +11,8 @@ endfunction
 function! ai_summary#api#CallOpenAIAPI(tmpfile) abort
     let api_key = $OPENAI_API_KEY
     if empty(api_key)
-        call ai_summary#debug#Log("ERROR: OPENAI_API_KEY is empty!")
+        " Log the error to the dedicated error log file
+        call ai_summary#debug#ErrorLog("OPENAI_API_KEY is empty!")
         echom "ERROR: OPENAI_API_KEY is empty!"
         return ""
     endif
