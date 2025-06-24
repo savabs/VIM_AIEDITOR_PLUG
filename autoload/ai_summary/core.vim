@@ -119,3 +119,12 @@ function! ai_summary#core#ShowHistory()
   call setline(1, split(json_encode(g:ai_summary_history), "\n"))
 endfunction
 
+" Echo the current conversation history as JSON on the command line
+function! ai_summary#core#PrintHistory()
+  if !exists('g:ai_summary_history') || empty(g:ai_summary_history)
+    echo "No conversation history"
+    return
+  endif
+  echo json_encode(g:ai_summary_history)
+endfunction
+
