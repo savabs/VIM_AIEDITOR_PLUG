@@ -52,7 +52,17 @@ one performs a specific action to help drive the summarizer.
 - `:ShowDebugLog` – displays the debug log located at `/tmp/debug_ai_summary.log`.
 - `:AISummaryChat` – opens a glass window with an integrated chat bar for
   continuous conversation with the AI (requires the `python3-pyqt5` package).
+
   The current buffer is sent as the initial context so you can ask
   questions about the file you were editing.
+
+
+- `:AISummaryChat` – opens a glass window with an integrated chat bar for
+  continuous conversation with the AI.
+
+- `:AISummaryChat` – opens an interactive chat bar at the bottom of the window
+  for continuous conversation with the AI.
+
+
 
 

@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets
 from ui import GlassChatWindow
 
 def main():
+
     file_content = None
     if len(sys.argv) > 1:
         path = sys.argv[1]
@@ -15,6 +16,10 @@ def main():
 
     app = QtWidgets.QApplication(sys.argv[:1])
     win = GlassChatWindow(file_content=file_content)
+
+    app = QtWidgets.QApplication(sys.argv)
+    win = GlassChatWindow()
+
     win.show()
     sys.exit(app.exec_())
 
