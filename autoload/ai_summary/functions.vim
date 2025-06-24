@@ -53,7 +53,17 @@ function! ai_summary#functions#ShowGlassChat()
     endif
 
 
+    " Write current buffer to a temporary file to use as context
+    let tmpfile = tempname()
+    call writefile(getline(1, '$'), tmpfile)
+
+    let script = shellescape(g:ai_summary_chat_glass)
+    let filearg = shellescape(tmpfile)
+    call system('python3 ' . script . ' ' . filearg . ' &')
+
+
     let script = shellescape(g:ai_summary_chat_glass)
     call system('python3 ' . script . ' &')
+
 endfunction
 
