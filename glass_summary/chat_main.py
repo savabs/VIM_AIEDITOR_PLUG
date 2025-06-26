@@ -14,11 +14,8 @@ def main():
         except Exception:
             file_content = f"[could not read {path}]"
 
-    app = QtWidgets.QApplication(sys.argv[:1])
-    win = GlassChatWindow(file_content=file_content)
-
     app = QtWidgets.QApplication(sys.argv)
-    win = GlassChatWindow()
+    win = GlassChatWindow(file_content=file_content)
 
     win.show()
     sys.exit(app.exec_())
