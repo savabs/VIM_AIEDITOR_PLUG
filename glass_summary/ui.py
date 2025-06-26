@@ -141,11 +141,6 @@ class GlassChatWindow(GlassCodeEditor):
         if file_content:
             self.history.append({"role": "system", "content": file_content})
 
-    def __init__(self, size=(1200, 800)):
-        super().__init__("<h2>AI Chat</h2>", size=size)
-        self.history = []
-
-
         self.input = QtWidgets.QLineEdit()
         self.input.setPlaceholderText("Type a message and press Enter")
         self.input.returnPressed.connect(self.handle_send)
