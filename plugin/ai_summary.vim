@@ -39,11 +39,6 @@ command! AISummaryChat call ai_summary#functions#ShowGlassChat()
 command! AISummarChat call ai_summary#functions#ShowGlassChat()
 
 
-command! AISummaryChat call ai_summary#functions#ShowGlassChat()
-
-command! AISummaryChat call ai_summary#chat#Start()
-
-
 
 " Conversation history for providing context
 let g:ai_summary_history = []
