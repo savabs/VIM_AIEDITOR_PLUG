@@ -135,6 +135,7 @@ class GlassCodeEditor(QtWidgets.QWidget):
 class GlassChatWindow(GlassCodeEditor):
     """Glass window with a chat input at the bottom."""
 
+
     CHAT_CSS = """
     <style>
         .chat-message {margin:4px 0;padding:8px;border-radius:6px;}
@@ -151,7 +152,7 @@ class GlassChatWindow(GlassCodeEditor):
     """
 
     def __init__(self, size=(1200, 800), file_content=None):
-        super().__init__(self.CHAT_CSS + "<h2>AI Chat</h2>", size=size)
+        super().__init__("<h2>AI Chat</h2>", size=size)
         self.history = []
         if file_content:
             self.history.append({"role": "system", "content": file_content})
@@ -163,11 +164,8 @@ class GlassChatWindow(GlassCodeEditor):
         self.background_layout.addWidget(self.input)
 
     def append_message(self, role, text):
-        from .parser import parse_markdown_text
-
-        html_text = parse_markdown_text(text)
-        cls = "chat-user" if role.lower() == "you" else "chat-assistant"
-        self.browser.append(f"<div class='chat-message {cls}'><b>{role}:</b> {html_text}</div>")
+        safe = html.escape(text)
+        self.browser.append(f"<b>{role}:</b> {safe}")
 
     def call_openai(self, message):
         api_key = os.environ.get("OPENAI_API_KEY", "")
