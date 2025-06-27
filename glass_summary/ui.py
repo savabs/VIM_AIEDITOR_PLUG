@@ -156,9 +156,11 @@ class GlassChatWindow(GlassCodeEditor):
         self.background_layout.addWidget(self.input)
 
     def append_message(self, role, text):
-        safe = html.escape(text).replace("\n", "<br>")
+        from .parser import parse_markdown_text
+
+        html_text = parse_markdown_text(text)
         cls = "chat-user" if role.lower() == "you" else "chat-assistant"
-        self.browser.append(f"<div class='chat-message {cls}'><b>{role}:</b> {safe}</div>")
+        self.browser.append(f"<div class='chat-message {cls}'><b>{role}:</b> {html_text}</div>")
 
     def call_openai(self, message):
         api_key = os.environ.get("OPENAI_API_KEY", "")

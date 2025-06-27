@@ -3,7 +3,7 @@ from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from glass_summary.parser import parse_markdown
+from glass_summary.parser import parse_markdown, parse_markdown_text
 
 
 def test_parse_markdown(tmp_path):
@@ -14,3 +14,10 @@ def test_parse_markdown(tmp_path):
     assert "<h1>Title</h1>" in html
     assert "<h2>Subtitle</h2>" in html
     assert "<pre" in html and "<code" in html
+
+
+def test_parse_markdown_text():
+    md_text = "**bold**\n\n# Heading"
+    html = parse_markdown_text(md_text)
+    assert "<strong>bold</strong>" in html
+    assert "<h1>Heading</h1>" in html
