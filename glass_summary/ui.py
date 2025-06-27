@@ -140,6 +140,13 @@ class GlassChatWindow(GlassCodeEditor):
         .chat-message {margin:4px 0;padding:8px;border-radius:6px;}
         .chat-user {background:#343541;color:#ffffff;}
         .chat-assistant {background:#40414f;color:#f1f1f1;}
+        QLineEdit {
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px;
+        }
     </style>
     """
 
