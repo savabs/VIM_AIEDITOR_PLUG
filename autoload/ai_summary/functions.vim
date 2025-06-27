@@ -58,7 +58,8 @@ function! ai_summary#functions#ShowGlassChat()
     endif
 
     " Fallback to the simple chat bar if PyQt5 is missing
-    echo "PyQt5 not found. Using Vim chat bar."
+   # echo "PyQt5 not found. Using Vim chat bar."
+    call ai_summary#debug#DebugLog("PyQt5 not found. Using Vim chat bar.")
     call ai_summary#chat#Start()
 endfunction
 
