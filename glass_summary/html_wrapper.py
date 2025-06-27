@@ -34,6 +34,16 @@ HTML_WRAPPER = """\
                 color: #f0f0f0;
             }}
 
+            ul {{
+                margin: 0.5em 0 0.5em 1.2em;
+                padding-left: 1.2em;
+                list-style-type: disc;
+            }}
+
+            li {{
+                margin: 0.3em 0;
+            }}
+
             pre {{
                 background: #1e1e1e;
                 color: #dcdcdc;
@@ -44,6 +54,7 @@ HTML_WRAPPER = """\
                 overflow-x: auto;
                 line-height: 1.5;
                 border: 1px solid rgba(255,255,255,0.1);
+                border-left: 4px solid #61dafb;
             }}
 
             code {{

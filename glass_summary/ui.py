@@ -137,9 +137,12 @@ class GlassChatWindow(GlassCodeEditor):
 
     CHAT_CSS = """
     <style>
-        .chat-message {margin:4px 0;padding:8px;border-radius:6px;}
+        .chat-message {margin:4px 0;padding:8px;border-radius:6px;font-size:1em;}
         .chat-user {background:#343541;color:#ffffff;}
         .chat-assistant {background:#40414f;color:#f1f1f1;}
+        .chat-message pre {background:#1e1e1e;color:#dcdcdc;padding:0.8em;border-radius:6px;border-left:4px solid #61dafb;}
+        .chat-message ul {margin:0.5em 0 0.5em 1.2em;padding-left:1.2em;list-style-type:disc;}
+        .chat-message li {margin:0.3em 0;}
         QLineEdit {
             background: rgba(0, 0, 0, 0.3);
             color: #ffffff;
