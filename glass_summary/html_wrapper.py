@@ -29,6 +29,27 @@ HTML_WRAPPER = """\
                 font-weight: bold;
             }}
 
+            h3 {{
+                font-size: 1.2em;
+                margin: 0.6em 0 0.3em;
+                color: #add8e6;
+                font-weight: bold;
+            }}
+
+            h4 {{
+                font-size: 1.1em;
+                margin: 0.5em 0 0.3em;
+                color: #b0c4de;
+                font-weight: bold;
+            }}
+
+            h5, h6 {{
+                font-size: 1em;
+                margin: 0.4em 0 0.2em;
+                color: #d3d3d3;
+                font-weight: bold;
+            }}
+
             p {{
                 margin: 0.5em 0;
                 color: #f0f0f0;
