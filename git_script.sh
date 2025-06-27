@@ -3,8 +3,8 @@
 # Fetch latest changes from the origin remote
 git fetch origin
 
-# Pull the latest changes from the main branch
-git pull origin main
+# Pull the latest changes from the main branch using merge
+git pull --no-rebase origin main
 
 # Add all changes (including new files, modified files, etc.)
 git add .
@@ -15,5 +15,5 @@ git commit -m "Update changes"
 # Push the changes to the origin's main branch
 git push origin main
 
-echo "Changes pushed to origin main successfully!"
+echo "✅ Changes pushed to origin main successfully! 🚀🎉"
 
