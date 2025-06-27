@@ -137,9 +137,19 @@ class GlassChatWindow(GlassCodeEditor):
 
     CHAT_CSS = """
     <style>
-        .chat-message {margin:4px 0;padding:8px;border-radius:6px;}
+        .chat-message {margin:4px 0;padding:8px;border-radius:6px;font-size:1em;}
         .chat-user {background:#343541;color:#ffffff;}
         .chat-assistant {background:#40414f;color:#f1f1f1;}
+        .chat-message pre {background:#1e1e1e;color:#dcdcdc;padding:0.8em;border-radius:6px;border-left:4px solid #61dafb;}
+        .chat-message code {background:rgba(50,50,50,0.7);color:#ffae57;padding:0.2em 0.4em;border-radius:4px;font-size:0.95em;}
+        .chat-message ul {margin:0.5em 0 0.5em 1.2em;padding-left:1.2em;list-style-type:disc;}
+        .chat-message li {margin:0.3em 0;}
+        .chat-message h1 {font-size:1.4em;margin:0.6em 0;color:#00bfff;}
+        .chat-message h2 {font-size:1.2em;margin:0.5em 0;color:#1e90ff;}
+        .chat-message h3 {font-size:1.1em;margin:0.4em 0;color:#add8e6;}
+        .chat-role {font-weight:bold;font-size:1.1em;margin-right:4px;}
+        .chat-user .chat-role {color:#61dafb;}
+        .chat-assistant .chat-role {color:#ffae57;}
         QLineEdit {
             background: rgba(0, 0, 0, 0.3);
             color: #ffffff;
@@ -167,7 +177,8 @@ class GlassChatWindow(GlassCodeEditor):
 
         html_text = parse_markdown_text(text)
         cls = "chat-user" if role.lower() == "you" else "chat-assistant"
-        self.browser.append(f"<div class='chat-message {cls}'><b>{role}:</b> {html_text}</div>")
+        role_html = f"<span class='chat-role'>{role}:</span>"
+        self.browser.append(f"<div class='chat-message {cls}'>{role_html} {html_text}</div>")
 
     def call_openai(self, message):
         api_key = os.environ.get("OPENAI_API_KEY", "")
