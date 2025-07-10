@@ -28,6 +28,17 @@ across sessions.
 
 ## Setup
 
+### Quick start (Ubuntu/Debian)
+
+Run the `setup.sh` helper which installs Vim, PyQt5 and the Python
+dependencies, then executes the test suite:
+
+```bash
+./setup.sh
+```
+
+### Manual steps
+
 1. Install Vim or Neovim with support for Vim script.
 2. Copy the `plugin/` and `autoload/` directories into your runtime path or use a
    plugin manager such as vim-plug.
@@ -42,7 +53,7 @@ across sessions.
 - Install development dependencies with:
 
 ```bash
-pip install -r requirements-dev.txt
+python3 -m pip install -r requirements-dev.txt
 ```
 
 - Run the unit tests from the repository root:
