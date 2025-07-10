@@ -1,3 +1,4 @@
+
 # Vim AI Summary Plugin
 
 **Vim AI Summary** is a small plugin that sends the current buffer or a selected
@@ -68,11 +69,13 @@ Buffer contents and prompts are sent to the OpenAI API in order to generate
 summaries or chat responses. The plugin does not send any additional telemetry
 and the conversation history is stored only locally.
 
-## Security Checklist
 
-- [x] No API keys or secrets are stored in the repository
-- [x] No telemetry or analytics are collected
-- [x] Safe to publish this plugin on GitHub
+## Recommendation
+- Add a short note to the setup section of the README describing how to modify ~/.vimrc (or init.vim) to include the plugin directory. Example text:
 
-Contributions and suggestions are welcome. Feel free to open issues or pull
-requests to improve the plugin.
+### If installing manually:
+set runtimepath+=/path/to/VIm_AIeditor
+Or, for Vim 8 package loading:
+
+mkdir -p ~/.vim/pack/plugins/start
+git clone https://github.com/yourname/VIm_AIeditor ~/.vim/pack/plugins/start/VIm_AIeditor
