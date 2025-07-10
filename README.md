@@ -1,62 +1,67 @@
-# VIm AIeditor
+# Vim AI Summary Plugin
 
-This repository contains a small helper library used by the Vim AI plugin.
+**Vim AI Summary** is a small plugin that sends the current buffer or a selected
+markdown file to the OpenAI API and shows the result in a translucent "glass"
+window. It can also maintain a conversation history, provide an interactive chat
+bar, and display debug or error logs inside Vim.
 
-## Running Tests
+## Features
 
-1. Install dependencies::
-
-    pip install -r requirements-dev.txt
-
-2. Run `pytest` from the repository root::
-
-    pytest
-
-## Viewing the conversation context
-
-The plugin stores chat history in the global Vim variable `g:ai_summary_history`.
-If the variable `g:ai_summary_history_file` is defined (it defaults to
-`/tmp/ai_summary_history.json`), the history is also written to that file so that
-it persists across Vim sessions.
-
-You can inspect the current context directly from Vim using:
-
-```
-:AISummaryPrintContext
-```
-
-to echo the JSON representation of the stored messages.  Alternatively, use
-
-```
-:AISummaryShowHistory
-```
-
-to open the history in a scratch buffer.
-
-## Vim Commands
-
-The plugin provides several commands that can be run directly from Vim.  Each
-one performs a specific action to help drive the summarizer.
-
-- `:CurrentFileSummary {prompt}` – summarises the current buffer using the
-  supplied text and shows the result in a floating "glass" window.
-- `:GlassSummary {markdown-file}` – opens the given Markdown file in the glass
-  viewer.
-- `:AISummaryShowHistory` – opens the stored conversation history in a scratch
+- `:CurrentFileSummary {prompt}` – summarise the current buffer with the given
+  prompt and display the response in a floating glass window.
+- `:GlassSummary {markdown-file}` – render a markdown file in the glass viewer.
+- `:AISummaryShowHistory` – open the stored conversation history in a scratch
   buffer.
-- `:AISummaryPrintContext` – prints the same history as JSON on the command
-  line.
-- `:AISummaryResetHistory` – clears the history variable and removes the
-  history file.
-- `:ShowErrorLog` – displays the error log located at `/tmp/vim_ai_error.log`.
-- `:ShowDebugLog` – displays the debug log located at `/tmp/debug_ai_summary.log`.
-- `:AISummaryChat` – opens a glass window with an integrated chat bar for
-  continuous conversation with the AI when the `python3-pyqt5` package is
-  installed. If `PyQt5` is unavailable, the command falls back to an
-  interactive chat bar at the bottom of the Vim window. The current buffer is
-  sent as the initial context so you can ask questions about the file you were
-  editing.
+- `:AISummaryPrintContext` – print the conversation history as JSON on the
+  command line.
+- `:AISummaryResetHistory` – clear the history list and delete the history file
+  if it exists.
+- `:ShowErrorLog` – open `/tmp/vim_ai_error.log` in a scratch buffer.
+- `:ShowDebugLog` – open `/tmp/debug_ai_summary.log` in a scratch buffer.
+- `:AISummaryChat` – start an interactive chat session. When PyQt5 is installed
+  the chat opens in a glass window; otherwise a simple chat bar is used.
 
+Conversation history is stored in the global variable `g:ai_summary_history`.
+If `g:ai_summary_history_file` is defined (defaults to
+`/tmp/ai_summary_history.json`), it is also written to that file for persistence
+across sessions.
 
+## Setup
 
+1. Install Vim or Neovim with support for Vim script.
+2. Copy the `plugin/` and `autoload/` directories into your runtime path or use a
+   plugin manager such as vim-plug.
+3. Set the `OPENAI_API_KEY` environment variable to your OpenAI key.
+4. Optional: install PyQt5 if you want the graphical glass windows.
+5. Optional: set `g:ai_summary_history_file` in your `vimrc` to change where the
+   history is saved.
 
+### Python and Tests
+
+- Requires **Python 3.9+** for the Python scripts in `glass_summary/`.
+- Install development dependencies with:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+- Run the unit tests from the repository root:
+
+```bash
+pytest -q
+```
+
+## Privacy
+
+Buffer contents and prompts are sent to the OpenAI API in order to generate
+summaries or chat responses. The plugin does not send any additional telemetry
+and the conversation history is stored only locally.
+
+## Security Checklist
+
+- [x] No API keys or secrets are stored in the repository
+- [x] No telemetry or analytics are collected
+- [x] Safe to publish this plugin on GitHub
+
+Contributions and suggestions are welcome. Feel free to open issues or pull
+requests to improve the plugin.
