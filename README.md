@@ -74,8 +74,8 @@ and the conversation history is stored only locally.
 - Add a short note to the setup section of the README describing how to modify ~/.vimrc (or init.vim) to include the plugin directory. Example text:
 
 ### If installing manually:
-set runtimepath+=/path/to/VIm_AIeditor
-Or, for Vim 8 package loading:
+-set runtimepath+=/path/to/VIm_AIeditor
+-Or, for Vim 8 package loading:
 
-mkdir -p ~/.vim/pack/plugins/start
-git clone https://github.com/yourname/VIm_AIeditor ~/.vim/pack/plugins/start/VIm_AIeditor
+-mkdir -p ~/.vim/pack/plugins/start
+-git clone https://github.com/yourname/VIm_AIeditor ~/.vim/pack/plugins/start/VIm_AIeditor
