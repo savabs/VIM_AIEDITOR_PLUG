@@ -8,7 +8,7 @@ bar, and display debug or error logs inside Vim.
 
 ## Features
 
-- `:CurrentFileSummary {prompt}` – summarise the current buffer with the given
+- `:CurrentFileSummary "prompt"` – summarise the current buffer with the given
   prompt and display the response in a floating glass window.
 - `:GlassSummary {markdown-file}` – render a markdown file in the glass viewer.
 - `:AISummaryShowHistory` – open the stored conversation history in a scratch
@@ -20,7 +20,7 @@ bar, and display debug or error logs inside Vim.
 - `:ShowErrorLog` – open `/tmp/vim_ai_error.log` in a scratch buffer.
 - `:ShowDebugLog` – open `/tmp/debug_ai_summary.log` in a scratch buffer.
 - `:AISummaryChat` – start an interactive chat session. When PyQt5 is installed
-  the chat opens in a glass window; otherwise a simple chat bar is used.
+  the chat opens in a glass window; otherwise a simple chat bar is used. ( try this one first ) 
 
 Conversation history is stored in the global variable `g:ai_summary_history`.
 If `g:ai_summary_history_file` is defined (defaults to
