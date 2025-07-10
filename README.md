@@ -1,62 +1,54 @@
-# VIm AIeditor
+# Local Semantic Search Engine
 
-This repository contains a small helper library used by the Vim AI plugin.
+An AI-powered filesystem search tool that indexes documents on your machine and returns files by semantic meaning. It supports PDFs, Word documents, text files and source code. The search runs entirely locally, so no file contents leave your computer.
 
-## Running Tests
+## How it Works
 
-1. Install dependencies::
+1. **Indexing** – `index_files.py` scans a directory, extracts raw text from supported formats and generates vector embeddings with [sentence-transformers](https://www.sbert.net/).
+2. **Vector storage** – Embeddings are saved in a lightweight database such as [Chroma](https://github.com/chroma-core/chroma) or [FAISS](https://github.com/facebookresearch/faiss). The database files stay on disk for quick searches.
+3. **Querying** – Run `query.py` with a natural language question. The script embeds the query and retrieves the top *N* most similar documents using cosine similarity.
 
-    pip install -r requirements-dev.txt
+## Setup
 
-2. Run `pytest` from the repository root::
+### Requirements
 
-    pytest
+- Python 3.9 or higher
+- [sentence-transformers](https://pypi.org/project/sentence-transformers/)
+- [Chroma](https://github.com/chroma-core/chroma) or [FAISS](https://github.com/facebookresearch/faiss)
+- `pdfminer.six`, `python-docx` and other optional extractors for different file types
 
-## Viewing the conversation context
+Install everything with:
 
-The plugin stores chat history in the global Vim variable `g:ai_summary_history`.
-If the variable `g:ai_summary_history_file` is defined (it defaults to
-`/tmp/ai_summary_history.json`), the history is also written to that file so that
-it persists across Vim sessions.
-
-You can inspect the current context directly from Vim using:
-
-```
-:AISummaryPrintContext
+```bash
+pip install -r requirements.txt
 ```
 
-to echo the JSON representation of the stored messages.  Alternatively, use
+### Index Files
 
+```bash
+python index_files.py /path/to/directory
 ```
-:AISummaryShowHistory
+
+This creates a local vector database (for example `chroma.db/`). Run the command again to update the index when files change.
+
+### Search
+
+```bash
+python query.py "how do I set up virtual environments?" -n 5
 ```
 
-to open the history in a scratch buffer.
+The tool prints the five most relevant file paths.
 
-## Vim Commands
+## Privacy
 
-The plugin provides several commands that can be run directly from Vim.  Each
-one performs a specific action to help drive the summarizer.
+All indexing and queries happen locally. No documents or embeddings are sent to any external service, so your data remains private.
 
-- `:CurrentFileSummary {prompt}` – summarises the current buffer using the
-  supplied text and shows the result in a floating "glass" window.
-- `:GlassSummary {markdown-file}` – opens the given Markdown file in the glass
-  viewer.
-- `:AISummaryShowHistory` – opens the stored conversation history in a scratch
-  buffer.
-- `:AISummaryPrintContext` – prints the same history as JSON on the command
-  line.
-- `:AISummaryResetHistory` – clears the history variable and removes the
-  history file.
-- `:ShowErrorLog` – displays the error log located at `/tmp/vim_ai_error.log`.
-- `:ShowDebugLog` – displays the debug log located at `/tmp/debug_ai_summary.log`.
-- `:AISummaryChat` – opens a glass window with an integrated chat bar for
-  continuous conversation with the AI when the `python3-pyqt5` package is
-  installed. If `PyQt5` is unavailable, the command falls back to an
-  interactive chat bar at the bottom of the Vim window. The current buffer is
-  sent as the initial context so you can ask questions about the file you were
-  editing.
+## Security Checklist
 
+- [x] No API keys or secrets are hard coded in the repository
+- [x] No telemetry or analytics are collected
+- [x] Safe to upload publicly to GitHub
 
+## Contributing
 
-
+Feel free to open issues or pull requests with improvements. This project is intentionally simple to allow easy customization for personal workflows.
